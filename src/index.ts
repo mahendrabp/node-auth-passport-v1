@@ -1,11 +1,6 @@
-import express = require('express');
+import app from './app';
+import './db';
 
-const app: express.Application = express();
-
-app.get('/', function (_, res) {
-  res.send('😶');
-});
-
-app.listen(3000, function () {
-  console.log('App is listening on port 3000!');
+app.listen(app.get('port'), () => {
+  console.log('Server running in port:', app.get('port'));
 });
