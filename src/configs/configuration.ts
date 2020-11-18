@@ -1,5 +1,5 @@
 export default {
-  jwt_default: process.env.JWT_SECRET,
+  jwt_default: process.env.JWT_SECRET || 'secret',
   DB: {
     uri:
       process.env.MONGO_URI ||

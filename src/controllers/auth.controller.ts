@@ -1,6 +1,13 @@
 import { Request, Response } from 'express';
 import User, { IUser } from '../models/User';
 import jwt from 'jsonwebtoken';
+import configs from '../configs/configuration';
+
+function createToken(user: IUser) {
+  return jwt.sign({ id: user.id, email: user.email }, configs.jwt_default, {
+    expiresIn: 24 * 60 * 60,
+  });
+}
 
 export const register = async (
   req: Request,
@@ -40,7 +47,7 @@ export const login = async (req: Request, res: Response) => {
 
   const isMatching = await user.comparePassword(req.body.password);
   if (isMatching) {
-    res.status(200).json(user);
+    res.status(200).json({ token: createToken(user) });
   }
 
   return res.status(400).json({
