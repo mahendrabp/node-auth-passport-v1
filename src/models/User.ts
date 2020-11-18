@@ -1,5 +1,5 @@
 import { NextFunction } from 'express';
-import { Document, Schema, model } from 'mongoose';
+import { Document, Schema, model, HookNextFunction } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 export interface IUser extends Document {
@@ -13,7 +13,7 @@ export interface IUser extends Document {
 const UserSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: false,
   },
   email: {
     type: String,
@@ -25,7 +25,7 @@ const UserSchema = new Schema({
   username: {
     type: String,
     unique: true,
-    required: true,
+    required: false,
   },
   password: {
     type: String,
@@ -42,7 +42,7 @@ const UserSchema = new Schema({
 });
 
 // before the save happen, we hash the password first
-UserSchema.pre<IUser>('save', async function (next: NextFunction) {
+UserSchema.pre<IUser>('save', async function (next: HookNextFunction) {
   const user = this;
   if (!user.isModified('password')) return next();
 

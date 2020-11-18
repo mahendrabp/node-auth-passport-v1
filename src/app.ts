@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import { config as dontenv } from 'dotenv';
+import { RouteNav } from './routes';
 
 //initialization
 const app = express();
@@ -13,5 +14,6 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
+app.use('/api/v1', RouteNav);
 
 export default app;
