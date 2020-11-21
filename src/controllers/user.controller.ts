@@ -19,3 +19,22 @@ export const getUserById = async (
   const user = await User.findById(id);
   return res.json(user);
 };
+
+export const updateUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  console.log(req.body?.email);
+  const userUpdate = req.body;
+  await User.findByIdAndUpdate(id, userUpdate);
+  return res.status(200).json({
+    msg: 'User successfully updated!',
+    user: userUpdate,
+  });
+};
+
+export const deleteUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  await User.findByIdAndRemove(id);
+  return res.status(200).json({
+    msg: 'User deleted successfully!',
+  });
+};
