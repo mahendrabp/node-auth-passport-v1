@@ -26,7 +26,10 @@ export const register = async (
     });
   }
 
+  console.log(user);
+
   const newUser = new User(req.body);
+  console.log(newUser);
   await newUser.save();
   return res.status(201).json(newUser);
 };

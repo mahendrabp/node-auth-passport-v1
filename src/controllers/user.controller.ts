@@ -5,7 +5,7 @@ export const getUsers = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const users = User.find({});
+  const users = await User.find({});
   return res.json(users);
 };
 
@@ -13,7 +13,9 @@ export const getUserById = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const id = req.params;
-  const user = User.findById(id);
+  // console.log(req.params.id);
+  const { id } = await req.params;
+  // console.log({ id });
+  const user = await User.findById(id);
   return res.json(user);
 };
